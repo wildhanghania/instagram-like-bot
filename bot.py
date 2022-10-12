@@ -1,5 +1,6 @@
 # Imports
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import time
 import random
@@ -29,13 +30,13 @@ class Instagram():
 		browser.get('https://www.instagram.com')
 		time.sleep(random.randrange(3, 5))
 
-		username_input = browser.find_element_by_name('username')
+		username_input = browser.find_element(By.NAME,'username')
 		username_input.clear()
 		username_input.send_keys(self.username)
 
 		time.sleep(random.randrange(2, 4))
 
-		password_input = browser.find_element_by_name('password')
+		password_input = browser.find_element(By.NAME,'password')
 		password_input.clear()
 		password_input.send_keys(self.password)
 		time.sleep(random.randrange(1, 2))
@@ -45,7 +46,7 @@ class Instagram():
 	def xpath_exists(self, url):
 		browser = self.browser
 		try:
-			browser.find_element_by_xpath(url)
+			browser.find_element(By.XPATH, url)
 			exist = True
 		except NoSuchElementException:
 			exist = False
@@ -58,12 +59,12 @@ class Instagram():
 		time.sleep(random.randrange(3, 5))
 
 		loops_count = int(amount / 12)
-		post_box = browser.find_element_by_xpath('/html/body/div[1]/section/main/article')
+		post_box = browser.find_element(By.XPATH,'/html/body/div[1]/section/main/article')
 
 		for i in range(1, loops_count + 1):
 			browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 			time.sleep(random.randrange(5, 7))
-		all_div = post_box.find_elements_by_tag_name("a")
+		all_div = post_box.find_element(By.TAG_NAME,"a")
 		posts_urls = [item.get_attribute('href') for item in all_div if "/p/" in item.get_attribute('href')]
 		del posts_urls[amount:]
 		
@@ -76,12 +77,12 @@ class Instagram():
 		time.sleep(random.randrange(3, 5))
 
 		loops_count = int(amount / 12)
-		post_box = browser.find_element_by_xpath('/html/body/div[1]/section/main/article')
+		post_box = browser.find_element(By.XPATH,'/html/body/div[1]/section/main/article')
 
 		for i in range(1, loops_count + 1):
 			browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 			time.sleep(random.randrange(5, 7))
-		all_div = post_box.find_elements_by_tag_name("a")
+		all_div = post_box.find_element(By.TAG_NAME,"a")
 		posts_urls = [item.get_attribute('href') for item in all_div if "/p/" in item.get_attribute('href')]
 		del posts_urls[amount:]
 		
@@ -92,7 +93,7 @@ class Instagram():
 		try:
 			browser.get(post)
 			time.sleep(random.randrange(1, 2))
-			browser.find_element_by_xpath('/html/body/div[1]/section/main/div/div[1]/article/div/div[2]/div[2]/section[1]/span[1]/button').click()
+			browser.find_element(By.XPATH,'/html/body/div[1]/section/main/div/div[1]/article/div/div[2]/div[2]/section[1]/span[1]/button').click()
 			time.sleep(random.randrange(1, 2))
 			browser.get(post)
 			time.sleep(random.randrange(1, 2))
